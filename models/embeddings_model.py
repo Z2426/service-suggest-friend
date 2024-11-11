@@ -6,6 +6,20 @@ from models.database import embeddings_collection, search_results_collection,use
 from utils.image_utils import align_faces
 from bson import ObjectId
 from mtcnn import MTCNN
+def detect_person_using_mtcnn(image):
+    """
+    Kiểm tra ảnh có người hay không bằng MTCNN.
+    
+    Args:
+    - image (numpy array): Hình ảnh cần kiểm tra.
+    
+    Returns:
+    - bool: True nếu có người, False nếu không có người.
+    """
+    detector = MTCNN()
+    faces = detector.detect_faces(image)
+    
+    return len(faces) > 0
 def get_user_data(user_id):
     print("GET INFO USERS")
     print(user_id)

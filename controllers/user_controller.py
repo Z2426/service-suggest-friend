@@ -1,8 +1,34 @@
 from flask import Blueprint, request, jsonify
-from models.embeddings_model import add_or_update_embedding, search_in_group,get_user_data
+from models.embeddings_model import add_or_update_embedding, search_in_group,get_user_data,detect_person_using_mtcnn
 from utils.image_utils import load_image_from_url
 
 user_blueprint = Blueprint('user', __name__)
+
+@user_blueprint.route('/detect_person', methods=['POST'])
+def detect_person():
+    """
+    API endpoint kiểm tra xem ảnh có chứa khuôn mặt hay không.
+    
+    Args:
+    - image_url (str): URL của ảnh cần kiểm tra.
+
+    Returns:
+    - JSON: Kết quả kiểm tra có khuôn mặt hay không.
+    """
+    data = request.json
+    image_url = data['image_url']
+    
+    # Tải ảnh từ URL
+    image = load_image_from_url(image_url)
+    if image is not None:
+        # Kiểm tra xem ảnh có người hay không
+        has_person = detect_person_using_mtcnn(image)
+        if has_person:
+            return jsonify({"message": "Ảnh có người."}), 200
+        else:
+            return jsonify({"message": "Ảnh không có người."}), 200
+    else:
+        return jsonify({"error": "Could not load image."}), 400
 @user_blueprint.route('/suggest_friend_by_image', methods=['POST'])
 def suggest_friend_by_image():
     data = request.json
