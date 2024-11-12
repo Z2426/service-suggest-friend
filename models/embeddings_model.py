@@ -32,7 +32,7 @@ def get_user_data(user_id):
 
     # Query to fetch user data from the Users collection based on the _id field
     #user_data = users_collection.find_one({"_id": user_id}, {"blockedUsers": 1, "friends": 1})\
-    user_data = users_collection.find_one({"_id": ObjectId("671d17af94cbf607726ed92f")}, {"blockedUsers": 1, "friends": 1})
+    user_data = users_collection.find_one({"_id": ObjectId(user_id)}, {"blockedUsers": 1, "friends": 1})
     #user_data=db.Users.find({ "_id": ObjectId("671d17af94cbf607726ed92f") }, { "blockedUsers": 1, "friends": 1 });
     if user_data:
         blocked_users = user_data.get("blockedUsers", [])
