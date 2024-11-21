@@ -1,10 +1,12 @@
-Flask
-python-dotenv
 opencv-python
-numpy
-Pillow
+numpy==1.21.5
+pillow
 requests
+pymongo==4.3.3
+python-dotenv
 deepface
 scipy
-pymongo
 mtcnn
+torch==2.0.1 
+tensorflow-cpu==2.7.0 
+protobuf==3.20.3
